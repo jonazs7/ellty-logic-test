@@ -65,7 +65,7 @@ const CalculationNode: React.FC<Props> = ({
         }}
       >
         <small style={{ color: "#888" }}>
-          Oleh: <b>{node.user.username}</b>
+          Oleh: <b>{node.user?.username || "Guest"}</b>
         </small>
         <h3 style={{ margin: "5px 0" }}>
           {node.operator && (
@@ -74,18 +74,20 @@ const CalculationNode: React.FC<Props> = ({
           {node.value}
         </h3>
 
-        <button
-          onClick={() => setShowReply(!showReply)}
-          style={{
-            fontSize: "12px",
-            padding: "4px 8px",
-            display: "flex",
-            alignItems: "center",
-            gap: "5px",
-          }}
-        >
-          <MessageSquare size={14} /> Balas
-        </button>
+        {currentUserId && (
+          <button
+            onClick={() => setShowReply(!showReply)}
+            style={{
+              fontSize: "12px",
+              padding: "4px 8px",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+            }}
+          >
+            <MessageSquare size={14} /> Balas
+          </button>
+        )}
 
         {showReply && (
           <form
