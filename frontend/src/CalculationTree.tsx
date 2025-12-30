@@ -27,7 +27,6 @@ const CalculationNode: React.FC<Props> = ({
   const [newValue, setNewValue] = useState<number>(0);
   const [operator, setOperator] = useState("+");
 
-  // Mencari "anak-anak" dari node ini
   const children = allData.filter((item) => item.parentId === node.id);
 
   const handleReply = async (e: React.FormEvent) => {
@@ -40,7 +39,7 @@ const CalculationNode: React.FC<Props> = ({
         parentId: node.id,
       });
       setShowReply(false);
-      onRefresh(); // Refresh data setelah berhasil
+      onRefresh(); 
     } catch (err) {
       alert("Gagal membalas kalkulasi");
     }
@@ -113,7 +112,6 @@ const CalculationNode: React.FC<Props> = ({
         )}
       </div>
 
-      {/* Render anak-anaknya secara rekursif */}
       {children.map((child) => (
         <CalculationNode
           key={child.id}

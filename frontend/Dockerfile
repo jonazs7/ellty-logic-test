@@ -2,7 +2,6 @@ FROM node:20-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-# Tambahan ini untuk memaksa binding Linux x64
 RUN npm install @rolldown/binding-linux-x64-musl 
 COPY . .
 EXPOSE 5173

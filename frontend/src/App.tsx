@@ -18,15 +18,13 @@ function App() {
     }
   };
 
-  // 1. Ubah useEffect agar selalu mengambil data saat aplikasi dimuat pertama kali
   useEffect(() => {
     fetchCalculations();
-  }, []); // Array kosong berarti dijalankan sekali saat halaman load
+  }, []); 
 
-  // 2. Tambahkan useEffect kedua agar data diperbarui otomatis saat status login berubah
   useEffect(() => {
     fetchCalculations();
-  }, [user]); // Dijalankan setiap kali user login atau logout
+  }, [user]); 
 
   const handleStartNew = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,10 +74,8 @@ function App() {
         )}
       </header>
 
-      {/* Form Login/Register hanya muncul jika BELUM login */}
       {!user && <Login onAuthSuccess={(userData) => setUser(userData)} />}
 
-      {/* Form Diskusi Baru hanya muncul jika SUDAH login */}
       {user && (
         <div
           style={{
@@ -107,7 +103,6 @@ function App() {
         </div>
       )}
 
-      {/* DAFTAR POHON SELALU TAMPIL (Sesuai Skenario 1) */}
       <div style={{ marginTop: "30px", textAlign: "left" }}>
         <h2>Pohon Kalkulasi Global</h2>
         {rootNodes.length === 0 && <p>Belum ada data...</p>}
@@ -116,7 +111,7 @@ function App() {
             key={node.id}
             node={node}
             allData={calculations}
-            currentUserId={user?.id || null} // Kirim null jika guest
+            currentUserId={user?.id || null} 
             onRefresh={fetchCalculations}
           />
         ))}

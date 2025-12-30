@@ -7,7 +7,7 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
-  const [isLogin, setIsLogin] = useState(true); // Toggle antara Login dan Register
+  const [isLogin, setIsLogin] = useState(true); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
@@ -27,7 +27,7 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
           text: "Akun berhasil dibuat! Silakan login.",
           type: "success",
         });
-        setIsLogin(true); // Pindah ke mode login setelah daftar sukses
+        setIsLogin(true); 
       }
     } catch (err: any) {
       setMessage({
