@@ -1,0 +1,46 @@
+services:
+  # 1. Database Service
+  db:
+    image: postgres:15
+    container_name: ellty-postgres
+    restart: always
+    environment:
+      # PENTING: Ini yang MENCIPTAKAN user & db saat pertama kali jalan
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ellty_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Backend Service
+  backend:
+    build: ./backend
+    container_name: ellty-backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      # PENTING: Koneksi ini HARUS COCOK dengan settingan 'db' di atas
+      # Di dalam Docker, panggil "db"
+      DATABASE_URL: "postgresql://user:password@db:5432/ellty_db?schema=public&sslmode=disable"
+    volumes:
+      - ./backend/src:/app/src
+      - /app/node_modules
+
+  # 3. Frontend: Tampilan aplikasi (React + TS)
+  frontend:
+    build: ./frontend
+    container_name: ellty-frontend
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+# --- BAGIAN INI YANG HARUS DITAMBAHKAN ---
+volumes:
+  postgres_data:
