@@ -1,8 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-// Pastikan tetap menggunakan .js sesuai saran TypeScript sebelumnya
 import { addCalculation } from "./calculations.js";
 
-// Mocking PrismaClient sebagai sebuah Class (Constructor)
 vi.mock("@prisma/client", () => {
   return {
     PrismaClient: class {

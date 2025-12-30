@@ -1,35 +1,29 @@
 generator client {
   provider      = "prisma-client-js"
-  // Gunakan garis miring ganda (//) untuk komentar, bukan tanda pagar (#)
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
-  // Di Prisma v6, ini WAJIB ada di sini
   url      = env("DATABASE_URL")
 }
 
-// 1. Tabel User untuk Registrasi & Login
 model User {
   id           String        @id @default(uuid())
   username     String        @unique
   password     String
-  calculations Calculation[] // Relasi: Satu user bisa punya banyak kalkulasi
+  calculations Calculation[] 
 }
 
-// 2. Tabel Calculation untuk Pohon Angka (Tree)
 model Calculation {
   id             String   @id @default(uuid())
-  value          Float    // Hasil akhir kalkulasi
-  operator       String?  // +, -, *, / (null jika post pertama)
-  operand        Float?   // Angka yang dimasukkan user untuk operasi
+  value          Float    
+  operator       String?  
+  operand        Float?   
   
-  // Relasi ke User (Registered User)
   userId         String?
   user           User?    @relation(fields: [userId], references: [id])
 
-  // Relasi ke Diri Sendiri (Untuk membentuk Pohon/Tree)
   parentId       String?
   parent         Calculation?  @relation("ParentChild", fields: [parentId], references: [id])
   replies        Calculation[] @relation("ParentChild")

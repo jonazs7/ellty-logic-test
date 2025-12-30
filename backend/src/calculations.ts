@@ -3,14 +3,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const addCalculation = async (
-  userId: string, // Ubah dari number ke string
+  userId: string, 
   value: number,
   operator: string | null = null,
-  parentId: string | null = null // Ubah dari number ke string
+  parentId: string | null = null 
 ) => {
   let finalResult = value;
 
-  // Jika ini adalah balasan (bukan angka pertama), lakukan operasi matematika
   if (parentId) {
     const parentNode = await prisma.calculation.findUnique({
       where: { id: parentId },
@@ -18,7 +17,6 @@ export const addCalculation = async (
 
     if (!parentNode) throw new Error("Parent calculation tidak ditemukan");
 
-    // Logika Matematika Berantai
     switch (operator) {
       case "+":
         finalResult = parentNode.value + value;
@@ -38,7 +36,6 @@ export const addCalculation = async (
     }
   }
 
-  // Simpan hasil kalkulasi ke database
   return await prisma.calculation.create({
     data: {
       value: finalResult,
@@ -49,7 +46,6 @@ export const addCalculation = async (
   });
 };
 
-// Fungsi untuk mengambil seluruh pohon data (untuk Fase 4 nanti)
 export const getAllCalculations = async () => {
   return await prisma.calculation.findMany({
     include: {
