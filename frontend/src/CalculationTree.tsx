@@ -29,17 +29,19 @@ const CalculationNode: React.FC<Props> = ({
 
   const children = allData.filter((item) => item.parentId === node.id);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleReply = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/calculations", {
+      await axios.post(`${API_URL}/api/calculations`, {
         userId: currentUserId,
         value: newValue,
         operator,
         parentId: node.id,
       });
       setShowReply(false);
-      onRefresh(); 
+      onRefresh();
     } catch (err) {
       alert("Gagal membalas kalkulasi");
     }

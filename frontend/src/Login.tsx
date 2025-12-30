@@ -7,19 +7,24 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
-  const [isLogin, setIsLogin] = useState(true); 
+  const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState({ text: "", type: "" });
+
+  // AMBIL URL DARI ENVIRONMENT VARIABLE
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const endpoint = isLogin ? "login" : "register";
     try {
-      const response = await axios.post(
-        `http://localhost:3000/api/${endpoint}`,
-        { username, password }
-      );
+      // GANTI localhost DENGAN API_URL
+      const response = await axios.post(`${API_URL}/api/${endpoint}`, {
+        username,
+        password,
+      });
+
       if (isLogin) {
         onAuthSuccess(response.data.user);
       } else {
@@ -27,7 +32,7 @@ const Login: React.FC<LoginProps> = ({ onAuthSuccess }) => {
           text: "Akun berhasil dibuat! Silakan login.",
           type: "success",
         });
-        setIsLogin(true); 
+        setIsLogin(true);
       }
     } catch (err: any) {
       setMessage({

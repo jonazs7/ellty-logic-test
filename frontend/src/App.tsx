@@ -9,9 +9,12 @@ function App() {
   const [calculations, setCalculations] = useState<any[]>([]);
   const [newRootValue, setNewRootValue] = useState<number>(0);
 
+  // AMBIL URL DARI ENVIRONMENT VARIABLE
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchCalculations = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/calculations");
+      const res = await axios.get(`${API_URL}/api/calculations`);
       setCalculations(res.data);
     } catch (err) {
       console.error("Gagal mengambil data", err);
@@ -20,16 +23,16 @@ function App() {
 
   useEffect(() => {
     fetchCalculations();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     fetchCalculations();
-  }, [user]); 
+  }, [user]);
 
   const handleStartNew = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/calculations", {
+      await axios.post(`${API_URL}/api/calculations`, {
         userId: user.id,
         value: newRootValue,
         operator: null,
@@ -111,7 +114,7 @@ function App() {
             key={node.id}
             node={node}
             allData={calculations}
-            currentUserId={user?.id || null} 
+            currentUserId={user?.id || null}
             onRefresh={fetchCalculations}
           />
         ))}
