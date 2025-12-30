@@ -26,7 +26,7 @@ Ensure you have **Docker** and **Docker Compose** installed on your machine.
 
 1. **Clone the Repository**:
     ```bash
-    git clone <my-repository-link>
+    git clone <https://github.com/jonazs7/ellty-logic-test.git>
     cd ellty-logic-test
 2. **Run with Docker Compose: This command will build the images and start the database, backend, and frontend services.**
     ```bash
